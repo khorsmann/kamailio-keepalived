@@ -1,5 +1,7 @@
-- hosts: all
+- hosts: kamailio
   become: yes
   gather_facts: yes
   roles:
     - roles/repos
+    - roles/kamailio
+    - roles/keepalived
