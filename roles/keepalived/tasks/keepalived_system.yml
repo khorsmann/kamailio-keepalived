@@ -25,5 +25,6 @@
     comment: keepalived_script
     shell: /sbin/nologin
     home: /var/empty
+    create_home: no
     system: True
     group: keepalived_script
