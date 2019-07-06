@@ -1,2 +1,5 @@
 ---
 # handlers file for repos
+- name: apk update cache
+  apk:
+    update_cache: yes

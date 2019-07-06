@@ -1,0 +1,12 @@
+# tasks file for repos
+
+- name: Enable main and community repo if Alpine
+  template:
+    src: repositories.j2
+    dest: /etc/apk/repositories
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_distribution == 'Alpine'
+  notify: apk update cache
+

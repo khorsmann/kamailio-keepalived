@@ -1,3 +1,4 @@
 ---
 # defaults file for repos
-repos_distribution_version: {{ ansible_facts['ansible_distribution_version' }}
+repos_baseurl: "http://dl-cdn.alpinelinux.org/alpine/"
+repos_distribution_version: "{{ ansible_distribution_version }}"
