@@ -1,0 +1,14 @@
+all:
+  hosts:
+    k1.0x300.de:
+    k2.0x300.de:
+  children:
+    kamailio:
+      hosts:
+        k1.0x300.de:
+        k2.0x300.de:
+    keepalived:
+      hosts:
+        k1.0x300.de:
+        k1.0x300.de:
+
