@@ -1,0 +1,25 @@
+vrrp_script check_sip {
+  script "/etc/keepalived/node.sh"
+  interval 6 # check every 6 seconds
+}
+
+vrrp_instance VI_SBC {
+{% if keepalived_node01 in ansible_all_ipv4_addresses }} %}
+  state MASTER
+{% else %}
+  state BACKUP
+{% endif %}
+  interface {{ keepalived_interface }}
+  virtual_router_id {{ keepalived_router_id }}
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass {{ keepalived_pass }}
+  }
+  virtual_ipaddress {
+    {{ keepalived_virtual_ipaddress }} dev {{ keepalived_interface }}
+  }
+  track_script {
+    check_sip
+  }
+}

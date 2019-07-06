@@ -1,8 +1,13 @@
+---
 # task file for kamailio_packages
 
 - name: install kamailio packages
   apk:
-    name: ['kamailio', 'kamailio-mysql']
+    name: [
+      'kamailio',
+      'kamailio-mysql',
+      'kamailio-json',
+      ]
     state: present 
   when: ansible_distribution == 'Alpine'
 
