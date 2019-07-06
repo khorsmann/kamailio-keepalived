@@ -2,10 +2,16 @@
 
 node01={{ keepalived_node01 }}
 node02={{ keepalived_node02 }}
+
+{% if keepalived_node01 in ansible_all_ipv4_addresses %}
+# runs on node01
 return_code=0 # success
-
 # check local instance
-
+{% else %}
+# runs on node02
+return_code=1 # fail
+# check remote instance first
+{% endif %}
 timeout 2 sipsak -s sip:$node01:5060
 exit_status=$?
 if [[ $exit_status -eq 0 ]]; then
@@ -17,7 +23,12 @@ timeout 2 sipsak -s sip:$node02:5060
 exit_status=$?
 if [[ $exit_status -eq 0 ]]; then
   echo "sip ping successful to node02 [$node02]"
+
+{% if keepalived_node01 in ansible_all_ipv4_addresses %}
   return_code=1
+{% else %}
+  return_code=0
+{% endif %}
 fi
 
 # node-footer.sh

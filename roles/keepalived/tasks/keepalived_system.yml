@@ -24,5 +24,6 @@
     name: keepalived_script
     comment: keepalived_script
     shell: /sbin/nologin
+    home: /var/empty
     system: True
     group: keepalived_script

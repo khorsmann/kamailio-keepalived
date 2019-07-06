@@ -6,10 +6,12 @@
     src: 'node.sh.j2'
     dest: /etc/keepalived/node.sh
     mode: 0755
+  notify: restart keepalived
 
-- name: Crete keepalived config /etc/keepalived/keepalived.conf
+- name: Create keepalived config /etc/keepalived/keepalived.conf
   template:
     src: 'keepalived.conf.j2'
     dest: /etc/keepalived/keepalived.conf
     mode: 0644
+  notify: restart keepalived
 
