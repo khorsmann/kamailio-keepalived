@@ -1,6 +1,6 @@
 ---
 # task file for keepalived_packages
-- name: install keepalived packages
+- name: Install keepalived packages
   apk:
     name: [
     'keepalived',

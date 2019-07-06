@@ -1,1 +1,1 @@
-ansible-playbook -i inventory/staging deploy.yml
+ansible-playbook -i inventory/staging deploy-kamailio.yml 
