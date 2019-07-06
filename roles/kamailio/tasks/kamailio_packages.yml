@@ -1,4 +1,4 @@
-# task file for kamailio
+# task file for kamailio_packages
 
 - name: install kamailio packages
   apk:

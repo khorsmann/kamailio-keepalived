@@ -1,0 +1,12 @@
+# task file for keepalived_packages
+
+- name: install keepalived packages
+  apk:
+    name: [
+    'keepalived',
+    'keepalived-sample-config',
+    'keepalived-common',
+    'keepalived-doc',
+    ]
+    state: present 
+  when: ansible_distribution == 'Alpine'

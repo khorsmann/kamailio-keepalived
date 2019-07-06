@@ -1,0 +1,14 @@
+# task file for global system settings
+#
+- name: create keepalived sysctl config file
+  copy:
+    src: files/99-non-local-bind.conf
+    dest: /etc/sysctl.d/99-non-local-bind.conf
+    mode: '0644'
+    owner: root
+    group: root
+  register: non_local_bind
+
+- name: run sysctl command
+  command: "sysctl -w net.ipv4.ip_nonlocal_bind=1"
+  when: non_local_bind.changed
