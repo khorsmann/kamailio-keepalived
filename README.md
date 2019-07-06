@@ -1,5 +1,10 @@
 Setup:
 
+# Every hosts needs
+- openssh server
+- sudo, python3 packages
+- one user with ssh-key and sudo without password
+
 # Master Kamailio Node
 k1.0x300.de - alpine
   eth0 dhcp, eth1 10.10.10.1 / netmask 255.255.255.0 no gateway
