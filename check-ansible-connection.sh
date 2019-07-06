@@ -1,1 +1,1 @@
-ansible -m ping all -i hosts.yaml
+ansible -m ping all -i inventory/staging
