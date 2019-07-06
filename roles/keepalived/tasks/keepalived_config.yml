@@ -1,0 +1,15 @@
+---
+# task file for keepalived_config
+
+- name: Create keepalived watcher script /etc/keepalived/node.sh
+  template:
+    src: 'node.sh.j2'
+    dest: /etc/keepalived/node.sh
+    mode: 0755
+
+- name: Crete keepalived config /etc/keepalived/keepalived.conf
+  template:
+    src: 'keepalived.conf.j2'
+    dest: /etc/keepalived/keepalived.conf
+    mode: 0644
+

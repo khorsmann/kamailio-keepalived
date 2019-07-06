@@ -1,2 +1,10 @@
 ---
 # defaults file for keepalived
+#
+keepalived_node01: "10.10.10.1"
+keepalived_node02: "10.10.10.2"
+
+keepalived_interface: "eth1"
+keepalived_router_id: "51"
+keepalived_pass: "s3cr3t"
+keepalived_virtual_ipaddress: "10.10.10.3"

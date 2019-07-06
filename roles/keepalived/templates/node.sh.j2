@@ -1,0 +1,26 @@
+#!/bin/sh
+
+node01={{ keepalived_node01 }}
+node02={{ keepalived_node02 }}
+return_code=0 # success
+
+# check local instance
+
+timeout 2 sipsak -s sip:$node01:5060
+exit_status=$?
+if [[ $exit_status -eq 0 ]]; then
+  echo "sip ping successful to node01 [$node01]"
+  exit $return_code
+fi
+
+timeout 2 sipsak -s sip:$node02:5060
+exit_status=$?
+if [[ $exit_status -eq 0 ]]; then
+  echo "sip ping successful to node02 [$node02]"
+  return_code=1
+fi
+
+# node-footer.sh
+echo "return code [$return_code]"
+exit $return_code
+

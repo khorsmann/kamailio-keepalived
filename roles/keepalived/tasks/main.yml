@@ -2,3 +2,5 @@
 # tasks file for keepalived
 - include: keepalived_packages.yml
 - include: keepalived_system.yml
+- include: keepalived_config.yml
+- include: keepalived_service.yml

@@ -1,0 +1,9 @@
+# keepalived_service
+---
+
+- name: Keepalived service
+  service:
+    name: keepalived
+    state: started
+    enabled: yes
+

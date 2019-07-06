@@ -1,5 +1,5 @@
+---
 # task file for keepalived_packages
-
 - name: install keepalived packages
   apk:
     name: [
@@ -7,6 +7,7 @@
     'keepalived-sample-config',
     'keepalived-common',
     'keepalived-doc',
+    'sipsak',
     ]
     state: present 
   when: ansible_distribution == 'Alpine'

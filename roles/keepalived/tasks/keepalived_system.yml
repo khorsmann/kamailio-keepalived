@@ -1,6 +1,7 @@
+---
 # task file for global system settings
 #
-- name: create keepalived sysctl config file
+- name: Create keepalived sysctl config file
   copy:
     src: files/99-non-local-bind.conf
     dest: /etc/sysctl.d/99-non-local-bind.conf
@@ -9,6 +10,19 @@
     group: root
   register: non_local_bind
 
-- name: run sysctl command
+- name: Run sysctl command
   command: "sysctl -w net.ipv4.ip_nonlocal_bind=1"
   when: non_local_bind.changed
+
+- name: Add system group for keepalived_script execution
+  group:
+    name: keepalived_script
+    system: True
+
+- name: Add system user for keepalived_script execution
+  user:
+    name: keepalived_script
+    comment: keepalived_script
+    shell: /sbin/nologin
+    system: True
+    group: keepalived_script
