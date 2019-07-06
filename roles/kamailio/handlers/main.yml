@@ -1,2 +1,6 @@
 ---
 # handlers file for kamailio
+- name: restart kamailio
+  service:
+    name: kamailio
+    state: reloaded

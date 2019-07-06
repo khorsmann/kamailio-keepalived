@@ -1,2 +1,10 @@
 ---
 # defaults file for kamailio
+
+kamailio_sipdomain: "sip.domain.local"
+kamailio_dbhost: "10.10.10.253"
+kamailio_dbname: "kamailio"
+kamailio_dbpass: "kamailiorw"
+kamailio_dbuser: "kamailio"
+kamailio_dbrouser: "kamailioro"
+kamailio_dbropass: "kamailioro"

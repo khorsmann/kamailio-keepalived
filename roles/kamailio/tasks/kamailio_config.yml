@@ -1,0 +1,16 @@
+---
+# task kamailio_config
+
+- name: Create kamailio config /etc/kamailio/kamailio.cfg
+  template:
+    src: 'kamailio.cfg.j2'
+    dest: /etc/kamailio/kamailio.cfg
+    mode: 0644
+  notify: restart kamailio
+
+- name: Create kamailio kamctl config /etc/kamailio/kamctlrc
+  template:
+    src: 'kamctlrc.j2'
+    dest: /etc/kamailio/kamctlrc
+    mode: 0644
+

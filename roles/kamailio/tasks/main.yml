@@ -1,4 +1,5 @@
 ---
 # tasks file for kamailio
 - include: kamailio_packages.yml
+- include: kamailio_config.yml
 - include: siputils_packages.yml
