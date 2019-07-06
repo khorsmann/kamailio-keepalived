@@ -1,0 +1,8 @@
+---
+# task file for kamailio / siputils
+
+- name: Install siputils packages on Alpine
+  apk:
+    name: ['sngrep', 'tcpdump', 'screen']
+    state: present
+  when: ansible_distribution == 'Alpine'
