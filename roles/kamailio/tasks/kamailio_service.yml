@@ -1,0 +1,9 @@
+# kamailio_service
+---
+
+- name: Kamailio service
+  service:
+    name: kamailio
+    state: started
+    enabled: yes
+
