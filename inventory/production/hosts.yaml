@@ -1,0 +1,20 @@
+all:
+  hosts:
+    k-1.localdomain:
+    k-2.localdomain:
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
+    kamailio_sipdomain: "sip.domain.local"
+    kamailio_dbhost: "10.10.10.253"
+    keepalived_node01: "10.10.10.21"
+    keepalived_node02: "10.10.10.20"
+  children:
+    kamailio:
+      hosts:
+        k-1.localdomain:
+        k-2.localdomain:
+    keepalived:
+      hosts:
+        k-1.localdomain:
+        k-2.localdomain:
+

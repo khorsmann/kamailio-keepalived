@@ -1,3 +1,4 @@
+echo "check inventory/staging"
 ansible -m ping all -i inventory/staging
 
 # show remote facts:
