@@ -1,0 +1,12 @@
+# configure listen interfaces for kamailio
+
+
+{% if keepalived_node01 in ansible_all_ipv4_addresses %}
+listen=udp:{{ keepalived_node01 }}:5060
+listen=tcp:{{ keepalived_node01 }}:5060
+{% else  %}
+listen=udp:{{ keepalived_node02 }}:5060
+listen=tcp:{{ keepalived_node02 }}:5060
+{% endif %}
+listen=udp:{{ keepalived_virtual_ipaddress }}:5060
+listen=tcp:{{ keepalived_virtual_ipaddress }}:5060

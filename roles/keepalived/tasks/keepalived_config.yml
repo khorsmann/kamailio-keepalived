@@ -14,4 +14,11 @@
     dest: /etc/keepalived/keepalived.conf
     mode: 0644
   notify: restart keepalived
+ 
+- name: Create kamailio-local.cfg config /etc/kamailio/kamailio-local.cfg
+  template:
+    src: 'kamailio-local.cfg.j2'
+    dest: /etc/kamailio/kamailio-local.cfg
+    mode: 0644
+  notify: restart kamailio
 
