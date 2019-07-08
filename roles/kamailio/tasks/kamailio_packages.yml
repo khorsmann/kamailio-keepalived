@@ -9,6 +9,7 @@
       'kamailio-json',
       'kamailio-utils',
       'kamailio-outbound',
+      'kamailio-extras',
       'mariadb-client',
       'mysql-client',
       ]
