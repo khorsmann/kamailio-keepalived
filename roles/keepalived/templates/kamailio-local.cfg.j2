@@ -1,11 +1,16 @@
 # configure listen interfaces for kamailio
 
-
 {% if keepalived_node01 in ansible_all_ipv4_addresses %}
+#!define DMQ_SERVER_ADDRESS "sip:{{ keepalived_node01 }}:5062"
+#!define DMQ_NOTIFICATION_ADDRESS "sip:{{ keepalived_node02 }}:5062"
 listen=udp:{{ keepalived_node01 }}:5060
+listen=udp:{{ keepalived_node01 }}:5062
 listen=tcp:{{ keepalived_node01 }}:5060
 {% else  %}
+#!define DMQ_SERVER_ADDRESS "sip:{{ keepalived_node02 }}:5062"
+#!define DMQ_NOTIFICATION_ADDRESS "sip:{{ keepalived_node01 }}:5062"
 listen=udp:{{ keepalived_node02 }}:5060
+listen=udp:{{ keepalived_node02 }}:5062
 listen=tcp:{{ keepalived_node02 }}:5060
 {% endif %}
 listen=udp:{{ keepalived_virtual_ipaddress }}:5060

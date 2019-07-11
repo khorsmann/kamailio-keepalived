@@ -3,6 +3,7 @@
 #!define WITH_ACCDB
 #!define WITH_SIPTRACE
 #!define WITH_DMQ_REGISTER
+#!define DMQ_PORT 5062
 #!define DBURL "mysql://{{kamailio_dbuser}}:{{kamailio_dbpass}}@{{kamailio_dbhost}}/{{kamailio_dbname}}"
 #
 # Kamailio (OpenSER) SIP Server v5.2 - default configuration script
@@ -305,6 +306,11 @@ loadmodule "debugger.so"
 loadmodule "siptrace.so"
 #!endif
 
+#!ifdef WITH_DMQ_REGISTER
+loadmodule "dmq.so"
+loadmodule "dmq_usrloc.so"
+#!endif
+
 # ----------------- setting module-specific parameters ---------------
 
 
@@ -477,6 +483,18 @@ modparam("siptrace", "trace_on", 1)
 #modparam("siptrace", "trace_delayed", 1)
 #!endif
 
+#!ifdef WITH_DMQ_REGISTER
+# dmq
+modparam("dmq", "server_address", DMQ_SERVER_ADDRESS)
+modparam("dmq", "notification_address", DMQ_NOTIFICATION_ADDRESS)
+modparam("dmq", "multi_notify", 1)
+modparam("dmq", "num_workers", 4)
+modparam("dmq", "ping_interval", 15)
+# dmq_usrloc
+modparam("dmq_usrloc", "enable", 1)
+modparam("dmq_usrloc", "sync", 1)
+#!endif
+
 ####### Routing Logic ########
 
 
@@ -484,6 +502,14 @@ modparam("siptrace", "trace_on", 1)
  * - processing of any incoming SIP request starts with this route
  * - note: this is the same as route { ... } */
 request_route {
+
+
+#!ifdef WITH_DMQ_REGISTER
+  if(is_method("KDMQ") && dst_port == DMQ_PORT){
+    dmq_handle_message();
+    exit;
+  }
+#!endif
 
 	# per request initial checks
 	route(REQINIT);
@@ -507,6 +533,7 @@ request_route {
 		}
 		t_check_trans();
 	}
+
 
 	# CHECK FOR MESSAGE STUFF
 	route(MESSAGE);
@@ -557,7 +584,7 @@ request_route {
 
 route[MESSAGE] {
 	if (is_method("MESSAGE")) {
-		xlog("[MESSAGE] this is an $fU $rU MESSAGE \n");
+		xlog("L_INFO", "[MESSAGE] this is an MSG from <$fU> to <$rU>\n");
 		sip_trace();
 	}
 	return;

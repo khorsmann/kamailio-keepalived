@@ -3,5 +3,5 @@
   gather_facts: yes
   roles:
     - roles/repos
-    - roles/kamailio
     - roles/keepalived
+    - roles/kamailio
