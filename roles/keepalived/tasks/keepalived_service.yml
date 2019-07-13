@@ -1,7 +1,7 @@
 # keepalived_service
 ---
 
-- name: Keepalived service
+- name: Start keepalived service
   service:
     name: keepalived
     state: started

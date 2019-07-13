@@ -1,0 +1,9 @@
+
+- name: Install rsyslogd packages
+  apk:
+    name: [
+    'rsyslog',
+    'rsyslog-openrc',
+    ]
+    state: present 
+  when: ansible_distribution == 'Alpine'

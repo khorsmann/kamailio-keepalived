@@ -1,0 +1,8 @@
+- kamailio restart dont applied correctly, need check
+- documentation (howto configure)
+- maybe an cloud-init for the instances?
+- kamailio-local.cfg to kamailio role
+- ip setup role
+- mysql setup role
+- kamailio, setup pike and htable for anti-spit
+- kamailio, setup tls

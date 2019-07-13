@@ -1,0 +1,14 @@
+# rsyslogd_service
+---
+
+- name: Start rsyslog service
+  service:
+    name: rsyslog
+    state: started
+    enabled: yes
+
+- name: Stop syslog service
+  service:
+    name: syslog
+    state: stopped
+    enabled: no

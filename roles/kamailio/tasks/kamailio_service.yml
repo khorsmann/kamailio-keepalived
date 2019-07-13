@@ -1,7 +1,7 @@
 # kamailio_service
 ---
 
-- name: Kamailio service
+- name: Start kamailio service
   service:
     name: kamailio
     state: started

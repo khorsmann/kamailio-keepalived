@@ -5,3 +5,4 @@
     - roles/repos
     - roles/keepalived
     - roles/kamailio
+    - roles/rsyslogd

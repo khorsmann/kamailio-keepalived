@@ -1,0 +1,4 @@
+---
+# tasks file for rsyslogd
+- include: rsyslogd_packages.yml
+- include: rsyslogd_service.yml

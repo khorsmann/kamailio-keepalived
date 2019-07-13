@@ -1,0 +1,10 @@
+# /etc/logrotate.d/kamailio-logrotate
+/var/log/kamailio/kamailio.log
+{
+    notifempty
+    compress
+    sharedscripts
+    postrotate
+            /etc/init.d/rsyslog --ifstarted reload >/dev/null
+    endscript
+}

@@ -1,5 +1,6 @@
 #!KAMAILIO
 #
+#!define WITH_ANTIFLOOD
 #!define WITH_MYSQL
 #!define WITH_USRLOCDB
 #!define WITH_ACCDB
@@ -168,13 +169,13 @@ log_prefix="{$mt $hdr(CSeq) $ci} "
 
 /* number of SIP routing processes for each UDP socket
  * - value inherited by tcp_children and sctp_children when not set explicitely */
-children=8
+children=4
 
 /* uncomment the next line to disable TCP (default on) */
 # disable_tcp=yes
 
 /* number of SIP routing processes for all TCP/TLS sockets */
-# tcp_children=8
+tcp_children=4
 
 /* uncomment the next line to disable the auto discovery of local aliases
  * based on reverse DNS on IPs (default on) */
@@ -615,7 +616,9 @@ route[RELAY] {
 
 # Per SIP request initial checks
 route[REQINIT] {
+#xlog("L_ALERT", "ENTER REQINIT (IP:$si:$sp)\n");
 #!ifdef WITH_ANTIFLOOD
+  #xlog("L_ALERT", "CHECK WITH_ANTIFLOOD\n");
 	# flood detection from same IP and traffic ban for a while
 	# be sure you exclude checking trusted peers, such as pstn gateways
 	# - local host excluded (e.g., loop to self)
@@ -631,12 +634,25 @@ route[REQINIT] {
 			exit;
 		}
 	}
-#!endif
-	if($ua =~ "friendly-scanner|sipcli|VaxSIPUserAgent") {
-		# silent drop for scanners - uncomment next line if want to reply
-		# sl_send_reply("200", "OK");
+
+	if ($ua =~ "friendly-scanner" ||
+			$ua =~ "sundayddr" ||
+			$ua =~ "pplsip" ||
+			$ua =~ "NiceGuy" ||
+			$ua =~ "PortSIP" ||
+			$ua =~ "sipcli" ) {
+		$sht(ipban=>$si) = 1;
+		xlog("L_WARN", "$ci|end|dropping message with user-agent $ua from $si:$sp\n");
+		drop;
 		exit;
 	}
+#!endif
+
+#	if($ua =~ "friendly-scanner|sipcli|VaxSIPUserAgent") {
+#		# silent drop for scanners - uncomment next line if want to reply
+#		# sl_send_reply("200", "OK");
+#		exit;
+#	}
 
 	if (!mf_process_maxfwd_header("10")) {
 		sl_send_reply("483","Too Many Hops");

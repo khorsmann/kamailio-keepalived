@@ -1,0 +1,41 @@
+---
+# task kamailio_rsyslogd
+- name: Be sure the folder is there /etc/rsyslog.d/
+  file:
+    path: '/etc/rsyslog.d'
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Be sure the folder is there /var/log/kamailio
+  file:
+    path: '/var/log/kamailio'
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy kamailio-logrotate to /etc/logrotate.d/kamailio-logrotate
+  copy:
+    src: 'kamailio-logrotate'
+    dest: /etc/logrotate.d/kamailio-logrotate
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy 10-kamailio.conf to /etc/rsyslog.d/10-kamailio.conf
+  copy:
+    src: '10-kamailio.conf'
+    dest: /etc/rsyslog.d/10-kamailio.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart rsyslog
+    - restart kamailio
+
+- name: remove /var/log/kamailio.log if its there
+  file:
+    path: '/var/log/kamailio.log'
+    state: absent
