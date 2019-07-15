@@ -1,6 +1,7 @@
 #!KAMAILIO
 #
 #!define WITH_ANTIFLOOD
+#!define WITH_HOMER_SECURITY_CHECKS
 #!define WITH_MYSQL
 #!define WITH_USRLOCDB
 #!define WITH_ACCDB
@@ -164,18 +165,23 @@ log_stderror=no
 memdbg=5
 memlog=5
 
+# dont expose server version
+server_signature=no
+sip_warning=0
+user_agent_header="User-Agent: Server"
+
 log_facility=LOG_LOCAL0
 log_prefix="{$mt $hdr(CSeq) $ci} "
 
 /* number of SIP routing processes for each UDP socket
  * - value inherited by tcp_children and sctp_children when not set explicitely */
-children=4
+children=8
 
 /* uncomment the next line to disable TCP (default on) */
 # disable_tcp=yes
 
 /* number of SIP routing processes for all TCP/TLS sockets */
-tcp_children=4
+# tcp_children=8
 
 /* uncomment the next line to disable the auto discovery of local aliases
  * based on reverse DNS on IPs (default on) */
@@ -640,13 +646,16 @@ route[REQINIT] {
 			$ua =~ "pplsip" ||
 			$ua =~ "NiceGuy" ||
 			$ua =~ "PortSIP" ||
-			$ua =~ "sipcli" ) {
+			$ua =~ "sipcli" || 
+			$ua =~ "unknown" ) {
 		$sht(ipban=>$si) = 1;
 		xlog("L_WARN", "$ci|end|dropping message with user-agent $ua from $si:$sp\n");
 		drop;
 		exit;
 	}
 #!endif
+
+route(HOMER_SECURITY_CHECKS);
 
 #	if($ua =~ "friendly-scanner|sipcli|VaxSIPUserAgent") {
 #		# silent drop for scanners - uncomment next line if want to reply
@@ -1008,6 +1017,26 @@ route[TOVOICEMAIL] {
 
 	return;
 }
+
+route[HOMER_SECURITY_CHECKS] {
+#!ifdef WITH_HOMER_SECURITY_CHECKS
+	if (is_method("INVITE|REGISTER")) {
+
+		if($au =~ "(\=)|(\-\-)|(')|(\#)|(\%27)|(\%24)" and $au != $null) {
+			xlog("L_INFO","Someone from $si is doing an sql injection attack, blocking!");
+			$sht(ipban=>$si) = 1;
+			exit;
+		}
+
+		if($(hdr(Record-Route)[0]{nameaddr.uri}) != $si and $(hdr(Record-Route)[0]{nameaddr.uri}) != $null) {
+			xlog("L_INFO","Spoofing attack detected from $si, blocking");
+			$sht(ipban=>$si) = 1;
+			exit;
+		}
+	}
+#!endif
+}
+
 
 # Manage outgoing branches
 branch_route[MANAGE_BRANCH] {

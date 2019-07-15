@@ -1,10 +1,20 @@
 # /etc/logrotate.d/kamailio-logrotate
 /var/log/kamailio/kamailio.log
 {
-    notifempty
-    compress
-    sharedscripts
-    postrotate
-            /etc/init.d/rsyslog --ifstarted reload >/dev/null
-    endscript
+		daily
+		size 500M
+		nodateext
+		missingok
+		notifempty
+		rotate 31
+		maxage 5
+		create
+		compress
+		delaycompress
+		sharedscripts
+		postrotate
+			/etc/init.d/syslog --ifstarted reload >/dev/null
+			/etc/init.d/rsyslog --ifstarted reload >/dev/null
+		endscript
 }
+

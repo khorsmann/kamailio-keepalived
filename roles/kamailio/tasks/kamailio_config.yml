@@ -1,16 +1,25 @@
 ---
 # task kamailio_config
 
+- name: Create kamailio init.d /etc/init.d/kamailio
+  template:
+    src: 'etc/init.d/kamailio'
+    dest: /etc/init.d/kamailio
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart kamailio
+
 - name: Create kamailio config /etc/kamailio/kamailio.cfg
   template:
-    src: 'kamailio.cfg.j2'
+    src: 'etc/kamailio/kamailio.cfg.j2'
     dest: /etc/kamailio/kamailio.cfg
     mode: 0644
   notify: restart kamailio
 
 - name: Create kamailio kamctl config /etc/kamailio/kamctlrc
   template:
-    src: 'kamctlrc.j2'
+    src: 'etc/kamailio/kamctlrc.j2'
     dest: /etc/kamailio/kamctlrc
     mode: 0644
 

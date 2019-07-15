@@ -5,10 +5,12 @@
   service:
     name: rsyslog
     state: started
+    runlevel: boot
     enabled: yes
 
 - name: Stop syslog service
   service:
     name: syslog
     state: stopped
+    runlevel: boot
     enabled: no
