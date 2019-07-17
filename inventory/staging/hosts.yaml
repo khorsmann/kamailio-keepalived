@@ -5,6 +5,8 @@ all:
   vars:
     ansible_python_interpreter: "/usr/bin/env python3"
     kamailio_sipdomain: "srv08.0x300.de"
+    keepalived_interface: "eth0"
+    keepalived_virtual_ipaddress: "192.168.122.100"
   children:
     kamailio:
       hosts:

@@ -1,14 +1,5 @@
 ---
 
-- name: Create kamailio init.d /etc/init.d/kamailio
-  template:
-    src: 'etc/init.d/kamailio'
-    dest: /etc/init.d/kamailio
-    owner: root
-    group: root
-    mode: 0755
-  notify: restart kamailio
-
 - name: Create kamailio config /etc/kamailio/kamailio.cfg
   template:
     src: 'etc/kamailio/kamailio.cfg.j2'

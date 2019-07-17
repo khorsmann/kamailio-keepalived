@@ -1,4 +1,4 @@
-- kamailio restart dont applied correctly, need check
+- Done. kamailio restart dont applied correctly, need check
 - documentation (howto configure)
 - maybe an cloud-init for the instances?
 - kamailio-local.cfg to kamailio role
