@@ -1,0 +1,24 @@
+---
+# kamailio_facts
+
+#kamailio_dbhost: "10.10.10.253"
+#kamailio_dbname: "kamailio"
+#kamailio_dbpass: "kamailiorw"
+#kamailio_dbuser: "kamailio"
+#kamailio_dbrouser: "kamailioro"
+#kamailio_dbropass: "kamailioro"
+#
+- name: Create /etc/ansible/facts.d
+  file: 
+    state: directory
+    recurse: yes
+    path: /etc/ansible/facts.d
+
+- name: Fill up local facts in /etc/ansible/facts.d/kamailio.fact
+  template:
+    src: 'etc/ansible/facts.d/kamailio.fact.j2'
+    dest: /etc/ansible/facts.d/kamailio.fact
+    mode: 0644
+
+- name: Re-read facts after adding custom fact
+  setup: filter=ansible_local

@@ -1,5 +1,6 @@
 #!KAMAILIO
 #
+#
 #!define WITH_ANTIFLOOD
 #!define WITH_HOMER_SECURITY_CHECKS
 #!define WITH_MYSQL
@@ -391,6 +392,7 @@ modparam("acc", "db_extra",
 modparam("usrloc", "db_url", DBURL)
 modparam("usrloc", "db_mode", 2)
 modparam("usrloc", "use_domain", MULTIDOMAIN)
+modparam("db_mysql", "update_affected_found", 1)
 #!endif
 
 # ----- auth_db params -----

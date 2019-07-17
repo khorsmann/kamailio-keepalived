@@ -1,5 +1,6 @@
 ---
 # tasks file for kamailio
+- include: kamailio_facts.yml
 - include: kamailio_rsyslogd.yml
 - include: kamailio_packages.yml
 - include: kamailio_config.yml

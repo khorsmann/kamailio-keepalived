@@ -1,5 +1,4 @@
 ---
-# task kamailio_config
 
 - name: Create kamailio init.d /etc/init.d/kamailio
   template:
