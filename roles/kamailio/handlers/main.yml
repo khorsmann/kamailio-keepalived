@@ -3,4 +3,4 @@
 - name: restart kamailio
   service:
     name: kamailio
-    state: reloaded
+    state: restarted
