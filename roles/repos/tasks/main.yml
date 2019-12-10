@@ -1,3 +1,4 @@
 ---
 # tasks file for repos
 - include: repos.yml
+- include: update.yml

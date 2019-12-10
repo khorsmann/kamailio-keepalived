@@ -5,6 +5,7 @@
     src: 'etc/kamailio/kamailio.cfg.j2'
     dest: /etc/kamailio/kamailio.cfg
     mode: 0644
+    validate: /usr/sbin/kamailio -c -f %s
   notify: restart kamailio
 
 - name: Create kamailio kamctl config /etc/kamailio/kamctlrc

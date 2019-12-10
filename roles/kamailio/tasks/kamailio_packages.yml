@@ -1,7 +1,7 @@
 ---
 # task file for kamailio_packages
 
-- name: Install kamailio packages
+- name: Install latest kamailio packages
   apk:
     name: [
       'kamailio',
@@ -10,10 +10,22 @@
       'kamailio-utils',
       'kamailio-outbound',
       'kamailio-extras',
+      'kamailio-python3',
+      ]
+    state: latest
+    update_cache: yes
+    repository: http://dl-3.alpinelinux.org/alpine/edge/main
+  when: ansible_distribution == 'Alpine'
+  notify: restart kamailio
+
+
+
+- name: Install dependencies packages
+  apk:
+    name: [
       'mariadb-client',
       'mysql-client',
       ]
-    state: present 
+    state: present
   when: ansible_distribution == 'Alpine'
-
 
