@@ -1,0 +1,7 @@
+---
+# tasks file for package update
+
+- name: Update
+  apk:
+      upgrade: yes
+  when: ansible_distribution == 'Alpine'

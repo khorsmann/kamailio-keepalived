@@ -2,6 +2,7 @@ all:
   hosts:
     k1.0x300.de:
     k2.0x300.de:
+    strg.0x300.de:
   vars:
     ansible_python_interpreter: "/usr/bin/env python3"
     kamailio_sipdomain: "srv08.0x300.de"

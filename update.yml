@@ -1,0 +1,18 @@
+---
+- hosts:
+  - all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: install static apk
+    apk:
+      name:
+        - busybox-static
+        - apk-tools-static
+
+  - name: Update
+    apk:
+      upgrade: yes
+      update_cache: yes
+    when: ansible_distribution == 'Alpine'
