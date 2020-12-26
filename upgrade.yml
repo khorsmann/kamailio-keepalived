@@ -1,0 +1,25 @@
+---
+- hosts:
+  - all
+  become: yes
+  gather_facts: yes
+  vars:
+    alpine_version: v3.12
+
+  tasks:
+  - name: Copy using inline content
+    copy:
+      dest: /etc/apk/repositories
+      content: |
+        http://dl-cdn.alpinelinux.org/alpine/{{ alpine_version }}/main
+        http://dl-cdn.alpinelinux.org/alpine/{{ alpine_version }}/community
+    when: ansible_distribution == 'Alpine'
+
+  - name: Upgrade
+    apk:
+      upgrade: yes
+      update_cache: yes
+      state: latest
+    when: ansible_distribution == 'Alpine'
+
+# apk fix # if it breaks
